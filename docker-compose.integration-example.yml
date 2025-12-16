@@ -1,0 +1,45 @@
+# Example integration for home/midnight-platform/docker-compose.yml
+#
+# Add this service to your existing docker-compose.yml file.
+# Adjust the paths, ports, and network names to match your setup.
+
+version: '3.8'
+
+services:
+  # Add this to your existing services
+  project-tracker:
+    build:
+      # Update this path relative to your docker-compose.yml location
+      # If docker-compose.yml is at: home/midnight-platform/docker-compose.yml
+      # And this project is at: home/3rd-party-modules/dockerfile
+      # Then the context should be:
+      context: ../3rd-party-modules/dockerfile
+      dockerfile: Dockerfile
+      args:
+        VITE_SUPABASE_URL: ${VITE_SUPABASE_URL:-https://acofscuaucqlbdlsrnze.supabase.co}
+        VITE_SUPABASE_ANON_KEY: ${VITE_SUPABASE_ANON_KEY}
+        GIT_REPO_NAME: project-tracker
+    container_name: project-tracker
+    ports:
+      # Change this port if 3000 is already in use
+      - "3000:80"
+    restart: unless-stopped
+    environment:
+      - VITE_SUPABASE_URL=${VITE_SUPABASE_URL:-https://acofscuaucqlbdlsrnze.supabase.co}
+      - VITE_SUPABASE_ANON_KEY=${VITE_SUPABASE_ANON_KEY}
+    networks:
+      # Use your existing network name (e.g., midnight-network)
+      - midnight-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    labels:
+      - "com.docker.compose.project=midnight-platform"
+
+# If you don't have this network, add it or use your existing one
+networks:
+  midnight-network:
+    external: true  # Use 'external: true' if the network already exists
