@@ -69,29 +69,38 @@ export const useConfig = () => {
 
   const loadConfig = async () => {
     try {
-      const { data: milestoneData } = await supabase
+      const { data: milestoneData, error: milestoneError } = await supabase
         .from('app_config')
         .select('config_value')
         .eq('config_key', 'milestone_options')
         .maybeSingle();
 
-      const { data: colorData } = await supabase
+      const { data: colorData, error: colorError } = await supabase
         .from('app_config')
         .select('config_value')
         .eq('config_key', 'row_colors')
         .maybeSingle();
 
-      const { data: categoryColorData } = await supabase
+      const { data: categoryColorData, error: categoryColorError } = await supabase
         .from('app_config')
         .select('config_value')
         .eq('config_key', 'category_colors')
         .maybeSingle();
 
-      const { data: categoryOpacityData } = await supabase
+      const { data: categoryOpacityData, error: categoryOpacityError } = await supabase
         .from('app_config')
         .select('config_value')
         .eq('config_key', 'category_opacity')
         .maybeSingle();
+
+      if (milestoneError || colorError || categoryColorError || categoryOpacityError) {
+        console.warn('Unable to load config from database, using defaults:', {
+          milestoneError,
+          colorError,
+          categoryColorError,
+          categoryOpacityError
+        });
+      }
 
       if (milestoneData) {
         setMilestoneOptions(milestoneData.config_value as MilestoneOption[]);
@@ -111,7 +120,7 @@ export const useConfig = () => {
 
       setLoading(false);
     } catch (err) {
-      console.error('Error loading config:', err);
+      console.warn('Error loading config, using defaults:', err);
       setLoading(false);
     }
   };

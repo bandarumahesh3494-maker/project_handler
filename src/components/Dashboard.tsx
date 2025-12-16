@@ -490,8 +490,29 @@ export const Dashboard: React.FC = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <div className="text-red-400 text-xl">Error: {error}</div>
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center p-8">
+        <div className="max-w-2xl text-center space-y-6">
+          <div className="text-red-400 text-2xl font-semibold">Database Connection Error</div>
+          <div className="text-gray-300 text-lg">{error}</div>
+          <div className="bg-gray-800 border border-gray-700 rounded-lg p-6 text-left space-y-4">
+            <div className="text-white font-semibold text-lg">Setup Instructions:</div>
+            <ol className="text-gray-300 space-y-3 list-decimal list-inside">
+              <li>Open the Supabase SQL Editor in your project dashboard</li>
+              <li>Run each migration file from the <code className="bg-gray-700 px-2 py-1 rounded">supabase/migrations/</code> folder in order (by timestamp)</li>
+              <li>Verify that all tables have been created: users, tasks, subtasks, sub_subtasks, milestones, app_config, action_history</li>
+              <li>Refresh this page after running all migrations</li>
+            </ol>
+            <div className="text-sm text-gray-400 mt-4">
+              Migration files are located in: <code className="bg-gray-700 px-2 py-1 rounded">supabase/migrations/</code>
+            </div>
+          </div>
+          <button
+            onClick={() => refetch()}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+          >
+            Retry Connection
+          </button>
+        </div>
       </div>
     );
   }
