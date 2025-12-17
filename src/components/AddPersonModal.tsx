@@ -91,7 +91,7 @@ export const AddPersonModal: React.FC<AddPersonModalProps> = ({ isOpen, onClose,
               <div className={`${colors.bgTertiary} rounded-lg border ${colors.border} max-h-64 overflow-y-auto`}>
                 <div className={`divide-y ${colors.border}`}>
                   {users.map((user) => (
-                    <div key={user.id} className="px-4 py-3 hover:bg-gray-800/50 transition-colors">
+                    <div key={user.id} className="px-4 py-3">
                       <div className="flex items-center justify-between">
                         <div>
                           <div className={`font-medium ${colors.text}`}>{user.full_name}</div>
@@ -182,14 +182,14 @@ export const AddPersonModal: React.FC<AddPersonModalProps> = ({ isOpen, onClose,
                 <button
                   type="button"
                   onClick={onClose}
-                  className={`flex-1 px-4 py-2 ${colors.bgSecondary} hover:opacity-80 ${colors.text} rounded-lg transition-colors`}
+                  className={`flex-1 px-4 py-2 ${colors.bgSecondary} ${colors.text} rounded-lg`}
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 disabled:cursor-not-allowed text-white rounded-lg transition-colors"
+                  className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 disabled:cursor-not-allowed text-white rounded-lg"
                 >
                   {loading ? 'Adding...' : 'Add Person'}
                 </button>

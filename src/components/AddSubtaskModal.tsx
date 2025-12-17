@@ -128,14 +128,14 @@ export const AddSubtaskModal: React.FC<AddSubtaskModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className={`flex-1 px-4 py-2 ${colors.bgSecondary} hover:opacity-80 ${colors.text} rounded-lg transition-colors`}
+              className={`flex-1 px-4 py-2 ${colors.bgSecondary}  ${colors.text} rounded-lg `}
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 disabled:cursor-not-allowed text-white rounded-lg transition-colors"
+              className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 disabled:cursor-not-allowed text-white rounded-lg "
             >
               {loading ? 'Adding...' : 'Add Subtask'}
             </button>
