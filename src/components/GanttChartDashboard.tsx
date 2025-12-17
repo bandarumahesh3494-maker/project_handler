@@ -185,8 +185,8 @@ export const GanttChartDashboard: React.FC = () => {
 
     return (
       <React.Fragment key={task.id}>
-        <tr className={`${colors.cardBg} border-b ${colors.border} hover:bg-gray-800/50`}>
-          <td className={`sticky left-0 z-10 ${colors.cardBg} border-r ${colors.border} px-3 py-2 w-[120px]`}>
+        <tr className={`border-b ${colors.border} hover:${colors.cardBg}/50`}>
+          <td className={`sticky left-0 z-10 bg-gray-900 border-r ${colors.border} px-3 py-2 w-[120px]`}>
             {task.type === 'task' && task.category && (
               <div className="flex items-center gap-2">
                 <div
@@ -197,11 +197,11 @@ export const GanttChartDashboard: React.FC = () => {
               </div>
             )}
           </td>
-          <td className={`sticky left-[120px] z-10 ${colors.cardBg} border-r ${colors.border} px-3 py-2 w-[250px]`}>
+          <td className={`sticky left-[120px] z-10 bg-gray-900 border-r ${colors.border} px-3 py-2 w-[250px]`}>
             {task.type === 'task' && (
               <div className="flex items-center gap-2">
                 {hasChildren && (
-                  <button onClick={() => toggleTask(task.id)} className={`${colors.textSecondary} hover:${colors.text}`}>
+                  <button onClick={() => toggleTask(task.id)} className="text-gray-400 hover:text-white">
                     {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                   </button>
                 )}
@@ -209,11 +209,11 @@ export const GanttChartDashboard: React.FC = () => {
               </div>
             )}
           </td>
-          <td className={`sticky left-[370px] z-10 ${colors.cardBg} border-r ${colors.border} px-3 py-2 w-[200px]`} style={{ paddingLeft: task.type !== 'task' ? `${(level - 1) * 20 + 12}px` : '12px' }}>
+          <td className={`sticky left-[370px] z-10 bg-gray-900 border-r ${colors.border} px-3 py-2 w-[200px]`} style={{ paddingLeft: task.type !== 'task' ? `${(level - 1) * 20 + 12}px` : '12px' }}>
             {task.type !== 'task' && (
               <div className="flex items-center gap-2">
                 {hasChildren && (
-                  <button onClick={() => toggleTask(task.id)} className={`${colors.textSecondary} hover:${colors.text}`}>
+                  <button onClick={() => toggleTask(task.id)} className="text-gray-400 hover:text-white">
                     {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                   </button>
                 )}
@@ -222,17 +222,17 @@ export const GanttChartDashboard: React.FC = () => {
               </div>
             )}
           </td>
-          <td className={`sticky left-[570px] z-10 ${colors.cardBg} border-r ${colors.border} px-3 py-2 w-[150px] text-sm`}>
+          <td className={`sticky left-[570px] z-10 bg-gray-900 border-r ${colors.border} px-3 py-2 w-[150px] text-sm`}>
             {task.assignedTo || '-'}
           </td>
           <td className="relative px-0 py-2 min-w-[800px]">
-            <div className="relative h-8 flex">
+            <div className="relative h-8 flex bg-gray-950">
               {dateRange.map((date, index) => {
                 const isToday = date === new Date().toISOString().split('T')[0];
                 return (
                   <div
                     key={date}
-                    className={`flex-1 border-r ${colors.border} ${isToday ? 'bg-blue-500/20' : ''}`}
+                    className={`flex-1 border-r ${colors.border} ${isToday ? 'bg-blue-500/10' : ''}`}
                     style={{ minWidth: '30px' }}
                   />
                 );
@@ -240,81 +240,80 @@ export const GanttChartDashboard: React.FC = () => {
               {position && (
                 <div className="absolute inset-0 px-1">
                   <div
-                    className="absolute top-1/2 -translate-y-1/2 rounded h-6 flex items-center overflow-hidden cursor-pointer group shadow-md"
+                    className="absolute top-1/2 -translate-y-1/2 rounded h-6 flex items-center overflow-hidden cursor-pointer group"
                     style={{
                       left: position.left,
                       width: position.width,
-                      backgroundColor: task.category ? getCategoryColor(task.category) : '#3b82f6',
-                      minWidth: '40px',
-                      opacity: 0.9
+                      backgroundColor: task.category ? getCategoryColor(task.category) : '#6b7280',
+                      minWidth: '40px'
                     }}
                     onMouseEnter={() => setHoveredTask(task.id)}
                     onMouseLeave={() => setHoveredTask(null)}
                   >
                     <div
-                      className="h-full bg-white/30"
+                      className="h-full bg-white/20"
                       style={{ width: `${task.progress || 0}%` }}
                     />
-                    <div className="absolute inset-0 flex items-center justify-center px-2 text-xs text-white font-semibold">
+                    <div className="absolute inset-0 flex items-center justify-center px-2 text-xs text-white font-medium">
                       <span className="truncate">{task.progress !== undefined && `${task.progress}%`}</span>
                     </div>
 
                     {hoveredTask === task.id && (
-                      <div className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-2 ${colors.cardBg} border-2 ${colors.border} rounded-lg shadow-2xl p-4 min-w-[280px] z-50 pointer-events-none`}>
+                      <div className={`absolute bottom-full left-1/2 -translate-x-1/2 mb-2 ${colors.cardBg} border ${colors.border} rounded-lg shadow-2xl p-4 min-w-[300px] z-50 pointer-events-none`}>
                         <div className="space-y-2">
-                          <div className={`font-bold text-base ${colors.text} border-b-2 ${colors.border} pb-2 mb-2`}>{task.name}</div>
+                          <div className="font-semibold text-base border-b border-gray-600 pb-2">{task.name}</div>
                           {task.type === 'task' && task.category && (
                             <div className="flex items-center gap-2">
-                              <span className={`${colors.textSecondary} text-sm font-medium`}>Category:</span>
+                              <span className="text-gray-400 text-sm">Category:</span>
                               <div className="flex items-center gap-2">
                                 <div
-                                  className="w-3 h-3 rounded shadow"
+                                  className="w-3 h-3 rounded"
                                   style={{ backgroundColor: getCategoryColor(task.category) }}
                                 />
-                                <span className="text-sm font-semibold uppercase">{task.category}</span>
+                                <span className="text-sm capitalize">{task.category}</span>
                               </div>
                             </div>
                           )}
                           {task.assignedTo && (
                             <div className="flex items-center gap-2">
-                              <span className={`${colors.textSecondary} text-sm font-medium`}>Assigned to:</span>
-                              <span className="text-sm font-semibold">{task.assignedTo}</span>
+                              <span className="text-gray-400 text-sm">Assigned to:</span>
+                              <span className="text-sm">{task.assignedTo}</span>
                             </div>
                           )}
                           {task.startDate && (
                             <div className="flex items-center gap-2">
-                              <span className={`${colors.textSecondary} text-sm font-medium`}>Start:</span>
-                              <span className="text-sm font-semibold">{formatDate(task.startDate)}</span>
+                              <span className="text-gray-400 text-sm">Start Date:</span>
+                              <span className="text-sm">{formatDate(task.startDate)}</span>
                             </div>
                           )}
                           {task.endDate && (
                             <div className="flex items-center gap-2">
-                              <span className={`${colors.textSecondary} text-sm font-medium`}>End:</span>
-                              <span className="text-sm font-semibold">{formatDate(task.endDate)}</span>
+                              <span className="text-gray-400 text-sm">End Date:</span>
+                              <span className="text-sm">{formatDate(task.endDate)}</span>
                             </div>
                           )}
                           {task.duration !== undefined && (
                             <div className="flex items-center gap-2">
-                              <span className={`${colors.textSecondary} text-sm font-medium`}>Duration:</span>
-                              <span className="text-sm font-semibold">{task.duration} day{task.duration !== 1 ? 's' : ''}</span>
+                              <span className="text-gray-400 text-sm">Duration:</span>
+                              <span className="text-sm">{task.duration} day{task.duration !== 1 ? 's' : ''}</span>
                             </div>
                           )}
                           {task.progress !== undefined && (
-                            <div className="space-y-1">
-                              <div className="flex items-center justify-between">
-                                <span className={`${colors.textSecondary} text-sm font-medium`}>Progress:</span>
-                                <span className="text-sm font-bold">{task.progress}%</span>
-                              </div>
-                              <div className="w-full h-2.5 bg-gray-700 rounded-full overflow-hidden shadow-inner">
-                                <div
-                                  className="h-full bg-gradient-to-r from-green-500 to-emerald-400 shadow"
-                                  style={{ width: `${task.progress}%` }}
-                                />
+                            <div className="flex items-center gap-2">
+                              <span className="text-gray-400 text-sm">Progress:</span>
+                              <div className="flex items-center gap-2 flex-1">
+                                <div className="flex-1 h-2 bg-gray-700 rounded-full overflow-hidden">
+                                  <div
+                                    className="h-full bg-green-500"
+                                    style={{ width: `${task.progress}%` }}
+                                  />
+                                </div>
+                                <span className="text-sm font-medium">{task.progress}%</span>
                               </div>
                             </div>
                           )}
                         </div>
-                        <div className={`absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent`} style={{ borderTopColor: colors.cardBg.includes('800') ? '#1f2937' : '#374151' }} />
+                        <div className={`absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-gray-700`} />
                       </div>
                     )}
                   </div>
@@ -354,23 +353,23 @@ export const GanttChartDashboard: React.FC = () => {
       </header>
 
       <div className="p-6">
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto overflow-y-auto max-h-[calc(100vh-180px)]">
           <table className="w-full border-collapse">
-            <thead>
-              <tr className={colors.headerBg}>
-                <th className={`sticky left-0 z-20 ${colors.headerBg} border ${colors.border} px-3 py-3 text-left font-semibold w-[120px]`}>
+            <thead className="sticky top-0 z-30">
+              <tr className="bg-gray-800">
+                <th className={`sticky left-0 z-30 bg-gray-800 border ${colors.border} px-3 py-3 text-left font-semibold w-[120px]`}>
                   Category
                 </th>
-                <th className={`sticky left-[120px] z-20 ${colors.headerBg} border ${colors.border} px-3 py-3 text-left font-semibold w-[250px]`}>
+                <th className={`sticky left-[120px] z-30 bg-gray-800 border ${colors.border} px-3 py-3 text-left font-semibold w-[250px]`}>
                   Task Name
                 </th>
-                <th className={`sticky left-[370px] z-20 ${colors.headerBg} border ${colors.border} px-3 py-3 text-left font-semibold w-[200px]`}>
+                <th className={`sticky left-[370px] z-30 bg-gray-800 border ${colors.border} px-3 py-3 text-left font-semibold w-[200px]`}>
                   Subtask
                 </th>
-                <th className={`sticky left-[570px] z-20 ${colors.headerBg} border ${colors.border} px-3 py-3 text-left font-semibold w-[150px]`}>
+                <th className={`sticky left-[570px] z-30 bg-gray-800 border ${colors.border} px-3 py-3 text-left font-semibold w-[150px]`}>
                   Engineer/Lead
                 </th>
-                <th className={`${colors.headerBg} border ${colors.border} px-0 py-3 font-semibold`}>
+                <th className={`bg-gray-800 border ${colors.border} px-0 py-3 font-semibold`}>
                   <div className="flex min-w-[1000px]">
                     {dateRange.map((date, index) => {
                       const showLabel = index % 5 === 0;
@@ -378,7 +377,7 @@ export const GanttChartDashboard: React.FC = () => {
                       return (
                         <div
                           key={date}
-                          className={`flex-1 text-center text-xs border-r ${colors.border} ${isToday ? 'bg-blue-500/20 font-bold' : ''}`}
+                          className={`flex-1 text-center text-xs border-r ${colors.border} ${isToday ? 'bg-blue-500/10 font-bold' : ''}`}
                           style={{ minWidth: '30px' }}
                         >
                           {showLabel ? formatDate(date) : ''}
