@@ -14,6 +14,13 @@ interface ThemeColors {
   rowOdd: string;
   accent: string;
   accentHover: string;
+  cardBg: string;
+  plannedRow: string;
+  actualRow: string;
+  categoryDev: string;
+  categoryTest: string;
+  categoryInfra: string;
+  categorySupport: string;
 }
 
 const themes: Record<ThemeOption, ThemeColors> = {
@@ -28,7 +35,14 @@ const themes: Record<ThemeOption, ThemeColors> = {
     rowEven: 'bg-gray-800/50',
     rowOdd: 'bg-gray-800/80',
     accent: 'bg-blue-600',
-    accentHover: 'hover:bg-blue-700'
+    accentHover: 'hover:bg-blue-700',
+    cardBg: 'bg-gray-800',
+    plannedRow: '#6366f1',
+    actualRow: '#eab308',
+    categoryDev: '#3b82f6',
+    categoryTest: '#10b981',
+    categoryInfra: '#8b5cf6',
+    categorySupport: '#f97316'
   },
   productivity: {
     bg: 'bg-slate-900',
@@ -41,7 +55,14 @@ const themes: Record<ThemeOption, ThemeColors> = {
     rowEven: 'bg-slate-800/50',
     rowOdd: 'bg-slate-800/80',
     accent: 'bg-sky-600',
-    accentHover: 'hover:bg-sky-700'
+    accentHover: 'hover:bg-sky-700',
+    cardBg: 'bg-slate-800',
+    plannedRow: '#0ea5e9',
+    actualRow: '#10b981',
+    categoryDev: '#0ea5e9',
+    categoryTest: '#06b6d4',
+    categoryInfra: '#6366f1',
+    categorySupport: '#f59e0b'
   },
   tech: {
     bg: 'bg-zinc-950',
@@ -54,7 +75,14 @@ const themes: Record<ThemeOption, ThemeColors> = {
     rowEven: 'bg-zinc-900/50',
     rowOdd: 'bg-zinc-900/80',
     accent: 'bg-blue-500',
-    accentHover: 'hover:bg-blue-600'
+    accentHover: 'hover:bg-blue-600',
+    cardBg: 'bg-zinc-900',
+    plannedRow: '#3b82f6',
+    actualRow: '#f59e0b',
+    categoryDev: '#3b82f6',
+    categoryTest: '#14b8a6',
+    categoryInfra: '#a855f7',
+    categorySupport: '#ef4444'
   },
   agile: {
     bg: 'bg-stone-900',
@@ -67,7 +95,14 @@ const themes: Record<ThemeOption, ThemeColors> = {
     rowEven: 'bg-stone-800/50',
     rowOdd: 'bg-stone-800/80',
     accent: 'bg-green-600',
-    accentHover: 'hover:bg-green-700'
+    accentHover: 'hover:bg-green-700',
+    cardBg: 'bg-stone-800',
+    plannedRow: '#22c55e',
+    actualRow: '#fb923c',
+    categoryDev: '#22c55e',
+    categoryTest: '#84cc16',
+    categoryInfra: '#eab308',
+    categorySupport: '#f97316'
   },
   modern: {
     bg: 'bg-slate-950',
@@ -80,7 +115,14 @@ const themes: Record<ThemeOption, ThemeColors> = {
     rowEven: 'bg-slate-900/50',
     rowOdd: 'bg-slate-900/80',
     accent: 'bg-teal-600',
-    accentHover: 'hover:bg-teal-700'
+    accentHover: 'hover:bg-teal-700',
+    cardBg: 'bg-slate-900',
+    plannedRow: '#14b8a6',
+    actualRow: '#06b6d4',
+    categoryDev: '#14b8a6',
+    categoryTest: '#0ea5e9',
+    categoryInfra: '#8b5cf6',
+    categorySupport: '#ec4899'
   },
   executive: {
     bg: 'bg-neutral-950',
@@ -93,7 +135,14 @@ const themes: Record<ThemeOption, ThemeColors> = {
     rowEven: 'bg-neutral-900/50',
     rowOdd: 'bg-neutral-900/80',
     accent: 'bg-amber-600',
-    accentHover: 'hover:bg-amber-700'
+    accentHover: 'hover:bg-amber-700',
+    cardBg: 'bg-neutral-900',
+    plannedRow: '#f59e0b',
+    actualRow: '#eab308',
+    categoryDev: '#d97706',
+    categoryTest: '#f59e0b',
+    categoryInfra: '#78716c',
+    categorySupport: '#dc2626'
   },
   light: {
     bg: 'bg-gray-50',
@@ -106,7 +155,14 @@ const themes: Record<ThemeOption, ThemeColors> = {
     rowEven: 'bg-gray-50',
     rowOdd: 'bg-white',
     accent: 'bg-blue-600',
-    accentHover: 'hover:bg-blue-700'
+    accentHover: 'hover:bg-blue-700',
+    cardBg: 'bg-white',
+    plannedRow: '#93c5fd',
+    actualRow: '#fde047',
+    categoryDev: '#60a5fa',
+    categoryTest: '#34d399',
+    categoryInfra: '#c084fc',
+    categorySupport: '#fb923c'
   }
 };
 

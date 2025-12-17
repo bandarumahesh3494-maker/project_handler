@@ -40,25 +40,25 @@ export const useConfig = () => {
   ]);
 
   const [rowColors, setRowColors] = useState<RowColors>({
-    planned: '#fbdd2b',
-    actual: '#1f3cd1',
-    plannedOpacity: 0.2,
-    actualOpacity: 0.2,
-    subSubtaskOpacity: 0.15
+    planned: '#6366f1',
+    actual: '#eab308',
+    plannedOpacity: 0.3,
+    actualOpacity: 0.3,
+    subSubtaskOpacity: 0.2
   });
 
   const [categoryColors, setCategoryColors] = useState<CategoryColors>({
-    dev: '#10b981',
-    test: '#3b82f6',
-    infra: '#eab308',
+    dev: '#3b82f6',
+    test: '#10b981',
+    infra: '#8b5cf6',
     support: '#f97316'
   });
 
   const [categoryOpacity, setCategoryOpacity] = useState<CategoryOpacity>({
-    dev: 1.0,
-    test: 1.0,
-    infra: 1.0,
-    support: 1.0
+    dev: 0.6,
+    test: 0.6,
+    infra: 0.6,
+    support: 0.6
   });
 
   const [loading, setLoading] = useState(true);

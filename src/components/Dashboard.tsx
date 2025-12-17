@@ -107,13 +107,27 @@ export const Dashboard: React.FC = () => {
   };
 
   const getCategoryColor = (category: string) => {
+    const opacity = categoryOpacity[category as keyof typeof categoryOpacity] || 0.6;
+    let color = categoryColors.dev;
+
     switch (category) {
-      case 'dev': return 'bg-green-700/30 border-green-600';
-      case 'test': return 'bg-blue-700/30 border-blue-600';
-      case 'infra': return 'bg-yellow-700/30 border-yellow-600';
-      case 'support': return 'bg-orange-700/30 border-orange-600';
-      default: return 'bg-gray-700/30 border-gray-600';
+      case 'dev':
+        color = colors.categoryDev;
+        break;
+      case 'test':
+        color = colors.categoryTest;
+        break;
+      case 'infra':
+        color = colors.categoryInfra;
+        break;
+      case 'support':
+        color = colors.categorySupport;
+        break;
+      default:
+        color = '#6b7280';
     }
+
+    return hexToRgba(color, opacity);
   };
 
   const getMilestoneColor = (milestoneText: string) => {
@@ -125,7 +139,7 @@ export const Dashboard: React.FC = () => {
 
   const getActualRowColor = (milestoneText: string | undefined): string => {
     if (!milestoneText) {
-      return hexToRgba(rowColors.actual, rowColors.actualOpacity);
+      return hexToRgba(colors.actualRow, 0.3);
     }
 
     const milestone = milestoneText.toUpperCase();
@@ -657,7 +671,7 @@ export const Dashboard: React.FC = () => {
                     <React.Fragment key={task.id}>
                       {subtasks.length === 0 ? (
                         <tr>
-                          <td className={`sticky left-0 z-10 border border-gray-700 px-2 py-3 w-[100px] lg:w-[120px] ${getCategoryColor(task.category)}`}>
+                          <td className="sticky left-0 z-10 border border-gray-700 px-2 py-3 w-[100px] lg:w-[120px]" style={{ backgroundColor: getCategoryColor(task.category) }}>
                             <select
                               value={task.category}
                               onChange={(e) => handleCategoryChange(task.id, e.target.value)}
@@ -720,8 +734,8 @@ export const Dashboard: React.FC = () => {
                           {/* PLANNED Row */}
                           {plannedSubtask && (
                             <>
-                              <tr style={{ backgroundColor: hexToRgba(rowColors.planned, rowColors.plannedOpacity) }}>
-                                <td rowSpan={totalRows} className={`sticky left-0 z-10 border border-gray-700 px-2 py-3 w-[100px] lg:w-[120px] ${getCategoryColor(task.category)}`}>
+                              <tr style={{ backgroundColor: hexToRgba(colors.plannedRow, 0.3) }}>
+                                <td rowSpan={totalRows} className="sticky left-0 z-10 border border-gray-700 px-2 py-3 w-[100px] lg:w-[120px]" style={{ backgroundColor: getCategoryColor(task.category) }}>
                                   <select
                                     value={task.category}
                                     onChange={(e) => handleCategoryChange(task.id, e.target.value)}
@@ -781,7 +795,7 @@ export const Dashboard: React.FC = () => {
                                     </button>
                                   )}
                                 </td>
-                                <td className="sticky left-[260px] lg:left-[320px] z-10 border border-gray-700 px-2 lg:px-4 py-3 w-[140px] lg:w-[160px]" style={{ backgroundColor: hexToRgba(rowColors.planned, rowColors.plannedOpacity) }}>
+                                <td className="sticky left-[260px] lg:left-[320px] z-10 border border-gray-700 px-2 lg:px-4 py-3 w-[140px] lg:w-[160px]" style={{ backgroundColor: hexToRgba(colors.plannedRow, 0.3) }}>
                                   <div>{plannedSubtask.subtask.name}</div>
                                   {isAdmin && (
                                     <button
@@ -793,7 +807,7 @@ export const Dashboard: React.FC = () => {
                                     </button>
                                   )}
                                 </td>
-                                <td className="sticky left-[400px] lg:left-[480px] z-10 border border-gray-700 px-2 py-3 w-[140px] lg:w-[160px]" style={{ backgroundColor: hexToRgba(rowColors.planned, rowColors.plannedOpacity) }}>
+                                <td className="sticky left-[400px] lg:left-[480px] z-10 border border-gray-700 px-2 py-3 w-[140px] lg:w-[160px]" style={{ backgroundColor: hexToRgba(colors.plannedRow, 0.3) }}>
                                   <select
                                     value={plannedSubtask.subtask.assigned_to || ''}
                                     onChange={(e) => handleAssignmentChange(plannedSubtask.subtask.id, e.target.value || null)}
@@ -811,7 +825,7 @@ export const Dashboard: React.FC = () => {
                                 {dateRange.map(date => {
                                   const milestonesForDate = plannedSubtask.milestones.filter(m => m.milestone_date === date);
                                   return (
-                                    <td key={date} className="border border-gray-700 px-2 py-2 align-top" style={{ backgroundColor: hexToRgba(rowColors.planned, rowColors.plannedOpacity) }}>
+                                    <td key={date} className="border border-gray-700 px-2 py-2 align-top" style={{ backgroundColor: hexToRgba(colors.plannedRow, 0.3) }}>
                                       <div className="space-y-1">
                                         {milestonesForDate.map(milestone => (
                                           <div
@@ -859,8 +873,8 @@ export const Dashboard: React.FC = () => {
                               </tr>
                               {/* PLANNED Sub-Subtasks */}
                               {plannedSubtask.subSubtasks.map(sst => (
-                                <tr key={sst.subSubtask.id} style={{ backgroundColor: hexToRgba(rowColors.planned, rowColors.subSubtaskOpacity) }}>
-                                  <td className="sticky left-[260px] lg:left-[320px] z-10 border border-gray-700 px-2 lg:px-4 py-3 pl-4 lg:pl-8 w-[140px] lg:w-[160px]" style={{ backgroundColor: hexToRgba(rowColors.planned, rowColors.subSubtaskOpacity) }}>
+                                <tr key={sst.subSubtask.id} style={{ backgroundColor: hexToRgba(colors.plannedRow, 0.2) }}>
+                                  <td className="sticky left-[260px] lg:left-[320px] z-10 border border-gray-700 px-2 lg:px-4 py-3 pl-4 lg:pl-8 w-[140px] lg:w-[160px]" style={{ backgroundColor: hexToRgba(colors.plannedRow, 0.2) }}>
                                     <div className="flex items-center gap-2">
                                       <span className="text-gray-400">↳</span> {sst.subSubtask.name}
                                       <button
@@ -879,7 +893,7 @@ export const Dashboard: React.FC = () => {
                                       </button>
                                     </div>
                                   </td>
-                                  <td className="sticky left-[400px] lg:left-[480px] z-10 border border-gray-700 px-2 py-3 w-[140px] lg:w-[160px]" style={{ backgroundColor: hexToRgba(rowColors.planned, rowColors.subSubtaskOpacity) }}>
+                                  <td className="sticky left-[400px] lg:left-[480px] z-10 border border-gray-700 px-2 py-3 w-[140px] lg:w-[160px]" style={{ backgroundColor: hexToRgba(colors.plannedRow, 0.2) }}>
                                     <select
                                       value={sst.subSubtask.assigned_to || ''}
                                       onChange={(e) => handleSubSubtaskAssignmentChange(sst.subSubtask.id, e.target.value || null)}
@@ -897,7 +911,7 @@ export const Dashboard: React.FC = () => {
                                   {dateRange.map(date => {
                                     const milestonesForDate = sst.milestones.filter(m => m.milestone_date === date);
                                     return (
-                                      <td key={date} className="border border-gray-700 px-2 py-2 align-top" style={{ backgroundColor: hexToRgba(rowColors.planned, rowColors.subSubtaskOpacity) }}>
+                                      <td key={date} className="border border-gray-700 px-2 py-2 align-top" style={{ backgroundColor: hexToRgba(colors.plannedRow, 0.2) }}>
                                         <div className="space-y-1">
                                           {milestonesForDate.map(milestone => (
                                             <div
@@ -948,10 +962,10 @@ export const Dashboard: React.FC = () => {
                           )}
 
                           {/* ACTUAL Row */}
-                          <tr style={{ backgroundColor: hexToRgba(rowColors.actual, rowColors.actualOpacity) }}>
+                          <tr style={{ backgroundColor: hexToRgba(colors.actualRow, 0.3) }}>
                             {!plannedSubtask && (
                               <>
-                                <td rowSpan={totalRows} className={`sticky left-0 z-10 border border-gray-700 px-2 py-3 w-[100px] lg:w-[120px] ${getCategoryColor(task.category)}`}>
+                                <td rowSpan={totalRows} className="sticky left-0 z-10 border border-gray-700 px-2 py-3 w-[100px] lg:w-[120px]" style={{ backgroundColor: getCategoryColor(task.category) }}>
                                   <select
                                     value={task.category}
                                     onChange={(e) => handleCategoryChange(task.id, e.target.value)}
@@ -1001,8 +1015,8 @@ export const Dashboard: React.FC = () => {
                                 </td>
                               </>
                             )}
-                            <td className="sticky left-[260px] lg:left-[320px] z-10 border border-gray-700 px-2 lg:px-4 py-3 font-semibold text-sm lg:text-base w-[140px] lg:w-[160px]" style={{ backgroundColor: hexToRgba(rowColors.actual, rowColors.actualOpacity) }}>ACTUAL</td>
-                            <td className="sticky left-[400px] lg:left-[480px] z-10 border border-gray-700 px-2 py-3 text-gray-500 text-xs w-[140px] lg:w-[160px]" style={{ backgroundColor: hexToRgba(rowColors.actual, rowColors.actualOpacity) }}>-</td>
+                            <td className="sticky left-[260px] lg:left-[320px] z-10 border border-gray-700 px-2 lg:px-4 py-3 font-semibold text-sm lg:text-base w-[140px] lg:w-[160px]" style={{ backgroundColor: hexToRgba(colors.actualRow, 0.3) }}>ACTUAL</td>
+                            <td className="sticky left-[400px] lg:left-[480px] z-10 border border-gray-700 px-2 py-3 text-gray-500 text-xs w-[140px] lg:w-[160px]" style={{ backgroundColor: hexToRgba(colors.actualRow, 0.3) }}>-</td>
                             {dateRange.map(date => {
                               const milestoneText = actualMilestones[date];
                               return (
