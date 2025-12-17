@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { logAction } from '../lib/actionLogger';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface AddTaskModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onSuccess?: () => void;
 }
 
-export const AddTaskModal: React.FC<AddTaskModalProps> = ({ isOpen, onClose }) => {
+export const AddTaskModal: React.FC<AddTaskModalProps> = ({ isOpen, onClose, onSuccess }) => {
+  const { colors } = useTheme();
   const [name, setName] = useState('');
   const [category, setCategory] = useState<'dev' | 'test' | 'infra' | 'support'>('dev');
   const [loading, setLoading] = useState(false);
@@ -56,6 +59,7 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({ isOpen, onClose }) =
 
       setName('');
       setCategory('dev');
+      onSuccess?.();
       onClose();
     } catch (err: any) {
       setError(err.message);
@@ -68,17 +72,17 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({ isOpen, onClose }) =
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-gray-800 rounded-lg shadow-xl w-full max-w-md">
-        <div className="flex items-center justify-between p-6 border-b border-gray-700">
-          <h3 className="text-xl font-semibold text-white">Add New Task</h3>
-          <button onClick={onClose} className="text-gray-400 hover:text-white">
+      <div className={`${colors.cardBg} rounded-lg shadow-xl w-full max-w-md`}>
+        <div className={`flex items-center justify-between p-6 border-b ${colors.border}`}>
+          <h3 className={`text-xl font-semibold ${colors.text}`}>Add New Task</h3>
+          <button onClick={onClose} className={`${colors.textSecondary} hover:${colors.text}`}>
             <X className="w-6 h-6" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
+            <label className={`block text-sm font-medium ${colors.textSecondary} mb-2`}>
               Task Name
             </label>
             <input
@@ -87,18 +91,18 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({ isOpen, onClose }) =
               onChange={(e) => setName(e.target.value)}
               required
               placeholder="e.g., DBInsights"
-              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={`w-full px-4 py-2 ${colors.bgSecondary} border ${colors.border} rounded-lg ${colors.text} focus:outline-none focus:ring-2 focus:ring-blue-500`}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
+            <label className={`block text-sm font-medium ${colors.textSecondary} mb-2`}>
               Category
             </label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value as any)}
-              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={`w-full px-4 py-2 ${colors.bgSecondary} border ${colors.border} rounded-lg ${colors.text} focus:outline-none focus:ring-2 focus:ring-blue-500`}
             >
               <option value="dev">DEV</option>
               <option value="test">TEST</option>
@@ -117,7 +121,7 @@ export const AddTaskModal: React.FC<AddTaskModalProps> = ({ isOpen, onClose }) =
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors"
+              className={`flex-1 px-4 py-2 ${colors.bgSecondary} hover:opacity-80 ${colors.text} rounded-lg transition-colors`}
             >
               Cancel
             </button>

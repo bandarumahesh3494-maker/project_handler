@@ -2,20 +2,24 @@ import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { logAction } from '../lib/actionLogger';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface AddSubSubtaskModalProps {
   isOpen: boolean;
   onClose: () => void;
   subtaskId: string;
   subtaskName: string;
+  onSuccess?: () => void;
 }
 
 export const AddSubSubtaskModal: React.FC<AddSubSubtaskModalProps> = ({
   isOpen,
   onClose,
   subtaskId,
-  subtaskName
+  subtaskName,
+  onSuccess
 }) => {
+  const { colors } = useTheme();
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -65,6 +69,7 @@ export const AddSubSubtaskModal: React.FC<AddSubSubtaskModalProps> = ({
       }
 
       setName('');
+      onSuccess?.();
       onClose();
     } catch (err: any) {
       setError(err.message);
@@ -77,17 +82,17 @@ export const AddSubSubtaskModal: React.FC<AddSubSubtaskModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-gray-800 rounded-lg shadow-xl w-full max-w-md">
-        <div className="flex items-center justify-between p-6 border-b border-gray-700">
-          <h3 className="text-xl font-semibold text-white">Add Sub-Subtask to {subtaskName}</h3>
-          <button onClick={onClose} className="text-gray-400 hover:text-white">
+      <div className={`${colors.cardBg} rounded-lg shadow-xl w-full max-w-md`}>
+        <div className={`flex items-center justify-between p-6 border-b ${colors.border}`}>
+          <h3 className={`text-xl font-semibold ${colors.text}`}>Add Sub-Subtask to {subtaskName}</h3>
+          <button onClick={onClose} className={`${colors.textSecondary} hover:${colors.text}`}>
             <X className="w-6 h-6" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
+            <label className={`block text-sm font-medium ${colors.textSecondary} mb-2`}>
               Sub-Subtask Name
             </label>
             <input
@@ -96,7 +101,7 @@ export const AddSubSubtaskModal: React.FC<AddSubSubtaskModalProps> = ({
               onChange={(e) => setName(e.target.value)}
               required
               placeholder="e.g., Component A, API endpoint"
-              className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={`w-full px-4 py-2 ${colors.bgSecondary} border ${colors.border} rounded-lg ${colors.text} focus:outline-none focus:ring-2 focus:ring-blue-500`}
             />
           </div>
 
@@ -110,7 +115,7 @@ export const AddSubSubtaskModal: React.FC<AddSubSubtaskModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors"
+              className={`flex-1 px-4 py-2 ${colors.bgSecondary} hover:opacity-80 ${colors.text} rounded-lg transition-colors`}
             >
               Cancel
             </button>

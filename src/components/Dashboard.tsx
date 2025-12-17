@@ -1219,8 +1219,8 @@ export const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      <AddTaskModal isOpen={showAddTask} onClose={() => setShowAddTask(false)} />
-      <AddPersonModal isOpen={showAddPerson} onClose={() => setShowAddPerson(false)} users={users} />
+      <AddTaskModal isOpen={showAddTask} onClose={() => setShowAddTask(false)} onSuccess={refetch} />
+      <AddPersonModal isOpen={showAddPerson} onClose={() => setShowAddPerson(false)} users={users} onSuccess={refetch} />
 
       {showAddSubtask && (
         <AddSubtaskModal
@@ -1229,6 +1229,7 @@ export const Dashboard: React.FC = () => {
           taskId={showAddSubtask.taskId}
           taskName={showAddSubtask.taskName}
           users={users}
+          onSuccess={refetch}
         />
       )}
 
@@ -1238,6 +1239,7 @@ export const Dashboard: React.FC = () => {
           onClose={() => setShowAddSubSubtask(null)}
           subtaskId={showAddSubSubtask.subtaskId}
           subtaskName={showAddSubSubtask.subtaskName}
+          onSuccess={refetch}
         />
       )}
 
