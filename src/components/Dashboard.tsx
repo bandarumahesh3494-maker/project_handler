@@ -20,7 +20,7 @@ import { useAuth } from '../contexts/AuthContext';
 export const Dashboard: React.FC = () => {
   const { groupedData, users, loading, error, refetch } = useTrackerData();
   const { colors } = useTheme();
-  const { milestoneOptions, rowColors, loading: configLoading } = useConfig();
+  const { milestoneOptions, rowColors, categoryColors, categoryOpacity, loading: configLoading } = useConfig();
   const { userProfile } = useAuth();
   const isAdmin = userProfile?.role === 'admin';
 
