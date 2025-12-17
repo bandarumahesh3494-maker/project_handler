@@ -221,18 +221,18 @@ export const TaskListDashboard: React.FC = () => {
 
   return (
     <div className={`min-h-screen ${colors.bg} ${colors.text}`}>
-      <header className={`${colors.headerBg} border-b ${colors.border} px-6 py-4`}>
-        <div className="flex items-center justify-between">
+      <header className={`${colors.headerBg} border-b ${colors.border} px-4 lg:px-6 py-3 lg:py-4`}>
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <List className="w-8 h-8 text-blue-500" />
-            <h1 className="text-2xl font-bold">Task List</h1>
+            <List className="w-6 h-6 lg:w-8 lg:h-8 text-blue-500" />
+            <h1 className="text-xl lg:text-2xl font-bold">Task List</h1>
           </div>
-          <div className="flex items-center gap-3">
-            <Filter className="w-5 h-5 text-gray-400" />
+          <div className="flex flex-wrap items-center gap-2 lg:gap-3">
+            <Filter className="w-4 h-4 lg:w-5 lg:h-5 text-gray-400" />
             <select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value)}
-              className={`${colors.bgSecondary} border ${colors.border} ${colors.text} px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              className={`${colors.bgSecondary} border ${colors.border} ${colors.text} px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm`}
             >
               <option value="all">All Categories</option>
               <option value="dev">DEV</option>
@@ -243,7 +243,7 @@ export const TaskListDashboard: React.FC = () => {
             <select
               value={assigneeFilter}
               onChange={(e) => setAssigneeFilter(e.target.value)}
-              className={`${colors.bgSecondary} border ${colors.border} ${colors.text} px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              className={`${colors.bgSecondary} border ${colors.border} ${colors.text} px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm`}
             >
               <option value="all">All Assignees</option>
               {users.map(user => (

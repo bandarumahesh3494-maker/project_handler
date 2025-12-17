@@ -44,100 +44,100 @@ function App() {
 
   return (
     <div className={`min-h-screen ${colors.bg}`}>
-      <div className={`${colors.headerBg} border-b ${colors.border} px-6 py-3`}>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
+      <div className={`${colors.headerBg} border-b ${colors.border} px-4 py-3`}>
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-2">
           <button
             onClick={() => setViewMode('timeline')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors text-sm whitespace-nowrap ${
               viewMode === 'timeline'
                 ? `${colors.accent} text-white`
                 : `${colors.bgTertiary} ${colors.textSecondary} hover:bg-opacity-80`
             }`}
           >
             <LayoutGrid className="w-4 h-4" />
-            Timeline View
+            Timeline
           </button>
           <button
             onClick={() => setViewMode('calendar')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors text-sm whitespace-nowrap ${
               viewMode === 'calendar'
                 ? `${colors.accent} text-white`
                 : `${colors.bgTertiary} ${colors.textSecondary} hover:bg-opacity-80`
             }`}
           >
             <CalendarDays className="w-4 h-4" />
-            Calendar View
+            Calendar
           </button>
           <button
             onClick={() => setViewMode('engineer')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors text-sm whitespace-nowrap ${
               viewMode === 'engineer'
                 ? `${colors.accent} text-white`
                 : `${colors.bgTertiary} ${colors.textSecondary} hover:bg-opacity-80`
             }`}
           >
             <Users className="w-4 h-4" />
-            User Breakdown
+            Users
           </button>
           <button
             onClick={() => setViewMode('kanban')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors text-sm whitespace-nowrap ${
               viewMode === 'kanban'
                 ? `${colors.accent} text-white`
                 : `${colors.bgTertiary} ${colors.textSecondary} hover:bg-opacity-80`
             }`}
           >
             <Kanban className="w-4 h-4" />
-            Kanban Board
+            Kanban
           </button>
           <button
             onClick={() => setViewMode('gantt')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors text-sm whitespace-nowrap ${
               viewMode === 'gantt'
                 ? `${colors.accent} text-white`
                 : `${colors.bgTertiary} ${colors.textSecondary} hover:bg-opacity-80`
             }`}
           >
             <BarChart3 className="w-4 h-4" />
-            Gantt Chart
+            Gantt
           </button>
           <button
             onClick={() => setViewMode('task-list')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors text-sm whitespace-nowrap ${
               viewMode === 'task-list'
                 ? `${colors.accent} text-white`
                 : `${colors.bgTertiary} ${colors.textSecondary} hover:bg-opacity-80`
             }`}
           >
             <List className="w-4 h-4" />
-            Task List
+            Tasks
           </button>
           <button
             onClick={() => setViewMode('engineer-performance')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors text-sm whitespace-nowrap ${
               viewMode === 'engineer-performance'
                 ? `${colors.accent} text-white`
                 : `${colors.bgTertiary} ${colors.textSecondary} hover:bg-opacity-80`
             }`}
           >
             <TrendingDown className="w-4 h-4" />
-            User Performance
+            Performance
           </button>
           <button
             onClick={() => setViewMode('task-delay')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors text-sm whitespace-nowrap ${
               viewMode === 'task-delay'
                 ? `${colors.accent} text-white`
                 : `${colors.bgTertiary} ${colors.textSecondary} hover:bg-opacity-80`
             }`}
           >
             <AlertCircle className="w-4 h-4" />
-            Task Delays
+            Delays
           </button>
           <button
             onClick={() => setViewMode('history')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors text-sm whitespace-nowrap ${
               viewMode === 'history'
                 ? `${colors.accent} text-white`
                 : `${colors.bgTertiary} ${colors.textSecondary} hover:bg-opacity-80`
@@ -148,7 +148,7 @@ function App() {
           </button>
           <button
             onClick={() => setViewMode('resource-analysis')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors text-sm whitespace-nowrap ${
               viewMode === 'resource-analysis'
                 ? `${colors.accent} text-white`
                 : `${colors.bgTertiary} ${colors.textSecondary} hover:bg-opacity-80`
@@ -158,14 +158,14 @@ function App() {
             Resources
           </button>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="text-white text-sm">
+          <div className="flex flex-wrap items-center gap-2 lg:gap-3">
+            <div className="text-white text-sm whitespace-nowrap">
               {userProfile?.full_name} <span className="text-gray-400">({userProfile?.role})</span>
             </div>
             <ThemeSelector />
             <button
               onClick={() => setViewMode('config')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors text-sm whitespace-nowrap ${
                 viewMode === 'config'
                   ? `${colors.accent} text-white`
                   : `${colors.bgTertiary} ${colors.textSecondary} hover:bg-opacity-80`

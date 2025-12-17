@@ -519,17 +519,37 @@ export const Dashboard: React.FC = () => {
 
   return (
     <div className={`min-h-screen ${colors.bg} ${colors.text}`}>
-      <header className={`${colors.headerBg} border-b ${colors.border} px-6 py-4`}>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Calendar className="w-8 h-8 text-blue-500" />
-            <h1 className="text-2xl font-bold">Project Tracker</h1>
+      <header className={`${colors.headerBg} border-b ${colors.border} px-4 py-3`}>
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Calendar className="w-6 h-6 lg:w-8 lg:h-8 text-blue-500" />
+              <h1 className="text-xl lg:text-2xl font-bold">Project Tracker</h1>
+            </div>
+            {isAdmin && (
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setShowAddPerson(true)}
+                  className="flex items-center gap-1 lg:gap-2 bg-green-600 hover:bg-green-700 px-2 lg:px-4 py-2 rounded-lg transition-colors text-sm lg:text-base whitespace-nowrap"
+                >
+                  <UserPlus className="w-4 h-4 lg:w-5 lg:h-5" />
+                  <span className="hidden sm:inline">Add Person</span>
+                </button>
+                <button
+                  onClick={() => setShowAddTask(true)}
+                  className="flex items-center gap-1 lg:gap-2 bg-blue-600 hover:bg-blue-700 px-2 lg:px-4 py-2 rounded-lg transition-colors text-sm lg:text-base whitespace-nowrap"
+                >
+                  <Plus className="w-4 h-4 lg:w-5 lg:h-5" />
+                  <span className="hidden sm:inline">Add Task</span>
+                </button>
+              </div>
+            )}
           </div>
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-2">
             <select
               value={viewMode}
               onChange={(e) => setViewMode(e.target.value as 'day' | 'week' | 'month')}
-              className={`${colors.bgSecondary} border ${colors.border} ${colors.text} px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              className={`${colors.bgSecondary} border ${colors.border} ${colors.text} px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm`}
             >
               <option value="day">Day View</option>
               <option value="week">Week View</option>
@@ -539,7 +559,7 @@ export const Dashboard: React.FC = () => {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as 'category' | 'priority')}
-              className={`${colors.bgSecondary} border ${colors.border} ${colors.text} px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              className={`${colors.bgSecondary} border ${colors.border} ${colors.text} px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm`}
             >
               <option value="category">Sort by Category</option>
               <option value="priority">Sort by Priority</option>
@@ -547,7 +567,7 @@ export const Dashboard: React.FC = () => {
             <select
               value={selectedEngineer}
               onChange={(e) => setSelectedEngineer(e.target.value)}
-              className={`${colors.bgSecondary} border ${colors.border} ${colors.text} px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500`}
+              className={`${colors.bgSecondary} border ${colors.border} ${colors.text} px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm`}
             >
               <option value="all">All Engineers</option>
               {users.map(user => (
@@ -558,62 +578,44 @@ export const Dashboard: React.FC = () => {
             </select>
             <button
               onClick={() => setHideClosedTasks(!hideClosedTasks)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors text-sm whitespace-nowrap ${
                 hideClosedTasks
                   ? 'bg-gray-600 hover:bg-gray-700'
                   : 'bg-gray-700 hover:bg-gray-600'
               }`}
               title={hideClosedTasks ? 'Show CLOSED tasks' : 'Hide CLOSED tasks'}
             >
-              {hideClosedTasks ? <Eye className="w-5 h-5" /> : <EyeOff className="w-5 h-5" />}
+              {hideClosedTasks ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
               {hideClosedTasks ? 'Show' : 'Hide'} CLOSED
             </button>
-            {isAdmin && (
-              <>
-                <button
-                  onClick={() => setShowAddPerson(true)}
-                  className="flex items-center gap-2 bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg transition-colors"
-                >
-                  <UserPlus className="w-5 h-5" />
-                  Add Person
-                </button>
-                <button
-                  onClick={() => setShowAddTask(true)}
-                  className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors"
-                >
-                  <Plus className="w-5 h-5" />
-                  Add Task
-                </button>
-              </>
-            )}
           </div>
         </div>
       </header>
 
-      <div className="p-6">
+      <div className="p-4 lg:p-6">
         <div className="overflow-x-auto">
           <div className="inline-block min-w-full">
             <table className="w-full border-collapse">
               <thead>
                 <tr className={colors.headerBg}>
-                  <th className={`sticky left-0 z-20 ${colors.headerBg} border ${colors.border} px-4 py-3 text-left font-semibold min-w-[120px]`}>
-                    Category
+                  <th className={`sticky left-0 z-20 ${colors.headerBg} border ${colors.border} px-2 lg:px-4 py-3 text-left font-semibold w-[100px] lg:w-[120px]`}>
+                    <span className="block truncate">Category</span>
                   </th>
-                  <th className={`sticky left-[120px] z-20 ${colors.headerBg} border ${colors.border} px-4 py-3 text-left font-semibold min-w-[180px]`}>
-                    Task Name
+                  <th className={`sticky left-[100px] lg:left-[120px] z-20 ${colors.headerBg} border ${colors.border} px-2 lg:px-4 py-3 text-left font-semibold w-[160px] lg:w-[200px]`}>
+                    <span className="block truncate">Task Name</span>
                   </th>
-                  <th className={`sticky left-[300px] z-20 ${colors.headerBg} border ${colors.border} px-4 py-3 text-left font-semibold min-w-[150px]`}>
-                    Sub Task
+                  <th className={`sticky left-[260px] lg:left-[320px] z-20 ${colors.headerBg} border ${colors.border} px-2 lg:px-4 py-3 text-left font-semibold w-[140px] lg:w-[160px]`}>
+                    <span className="block truncate">Sub Task</span>
                   </th>
-                  <th className={`sticky left-[450px] z-20 ${colors.headerBg} border ${colors.border} px-4 py-3 text-left font-semibold min-w-[150px]`}>
-                    Engineer/Lead
+                  <th className={`sticky left-[400px] lg:left-[480px] z-20 ${colors.headerBg} border ${colors.border} px-2 lg:px-4 py-3 text-left font-semibold w-[140px] lg:w-[160px]`}>
+                    <span className="block truncate">Engineer/Lead</span>
                   </th>
                   {dateRange.map(date => (
                     <th
                       key={date}
-                      className={`border ${colors.border} px-3 py-3 text-center font-semibold min-w-[120px] ${colors.headerBg}`}
+                      className={`border ${colors.border} px-2 lg:px-3 py-3 text-center font-semibold w-[100px] lg:w-[120px] ${colors.headerBg}`}
                     >
-                      {formatDateHeader(date)}
+                      <span className="block truncate">{formatDateHeader(date)}</span>
                     </th>
                   ))}
                 </tr>
@@ -655,11 +657,11 @@ export const Dashboard: React.FC = () => {
                     <React.Fragment key={task.id}>
                       {subtasks.length === 0 ? (
                         <tr>
-                          <td className={`sticky left-0 z-10 border border-gray-700 px-2 py-3 ${getCategoryColor(task.category)}`}>
+                          <td className={`sticky left-0 z-10 border border-gray-700 px-2 py-3 w-[100px] lg:w-[120px] ${getCategoryColor(task.category)}`}>
                             <select
                               value={task.category}
                               onChange={(e) => handleCategoryChange(task.id, e.target.value)}
-                              className="w-full bg-transparent border-none text-white font-medium uppercase focus:outline-none focus:ring-2 focus:ring-blue-500 rounded px-2 py-1"
+                              className="w-full bg-transparent border-none text-white font-medium uppercase focus:outline-none focus:ring-2 focus:ring-blue-500 rounded px-1 py-1 text-xs lg:text-sm"
                             >
                               <option value="dev" className="bg-gray-800">DEV</option>
                               <option value="test" className="bg-gray-800">TEST</option>
@@ -667,7 +669,7 @@ export const Dashboard: React.FC = () => {
                               <option value="support" className="bg-gray-800">SUPPORT</option>
                             </select>
                           </td>
-                          <td className="sticky left-[120px] z-10 bg-gray-900 border border-gray-700 px-4 py-3 font-medium">
+                          <td className="sticky left-[100px] lg:left-[120px] z-10 bg-gray-900 border border-gray-700 px-2 lg:px-4 py-3 font-medium w-[160px] lg:w-[200px]">
                             <div className="flex items-center gap-2">
                               <div className="flex items-center gap-1">
                                 {[1, 2, 3].map((star) => (
@@ -707,8 +709,8 @@ export const Dashboard: React.FC = () => {
                               </button>
                             )}
                           </td>
-                          <td className="sticky left-[300px] z-10 bg-gray-900 border border-gray-700 px-4 py-3">-</td>
-                          <td className="sticky left-[450px] z-10 bg-gray-900 border border-gray-700 px-4 py-3">-</td>
+                          <td className="sticky left-[260px] lg:left-[320px] z-10 bg-gray-900 border border-gray-700 px-2 lg:px-4 py-3 w-[140px] lg:w-[160px]">-</td>
+                          <td className="sticky left-[400px] lg:left-[480px] z-10 bg-gray-900 border border-gray-700 px-2 lg:px-4 py-3 w-[140px] lg:w-[160px]">-</td>
                           {dateRange.map(date => (
                             <td key={date} className="border border-gray-700 px-3 py-2 bg-gray-900"></td>
                           ))}
@@ -719,11 +721,11 @@ export const Dashboard: React.FC = () => {
                           {plannedSubtask && (
                             <>
                               <tr style={{ backgroundColor: hexToRgba(rowColors.planned, rowColors.plannedOpacity) }}>
-                                <td rowSpan={totalRows} className={`sticky left-0 z-10 border border-gray-700 px-2 py-3 ${getCategoryColor(task.category)}`}>
+                                <td rowSpan={totalRows} className={`sticky left-0 z-10 border border-gray-700 px-2 py-3 w-[100px] lg:w-[120px] ${getCategoryColor(task.category)}`}>
                                   <select
                                     value={task.category}
                                     onChange={(e) => handleCategoryChange(task.id, e.target.value)}
-                                    className="w-full bg-transparent border-none text-white font-medium uppercase focus:outline-none focus:ring-2 focus:ring-blue-500 rounded px-2 py-1"
+                                    className="w-full bg-transparent border-none text-white font-medium uppercase focus:outline-none focus:ring-2 focus:ring-blue-500 rounded px-1 py-1 text-xs lg:text-sm"
                                   >
                                     <option value="dev" className="bg-gray-800">DEV</option>
                                     <option value="test" className="bg-gray-800">TEST</option>
@@ -731,7 +733,7 @@ export const Dashboard: React.FC = () => {
                                     <option value="support" className="bg-gray-800">SUPPORT</option>
                                   </select>
                                 </td>
-                                <td rowSpan={totalRows} className="sticky left-[120px] z-10 bg-gray-900 border border-gray-700 px-4 py-3">
+                                <td rowSpan={totalRows} className="sticky left-[100px] lg:left-[120px] z-10 bg-gray-900 border border-gray-700 px-2 lg:px-4 py-3 w-[160px] lg:w-[200px]">
                                   <div className="font-medium flex items-center gap-2">
                                     <div className="flex items-center gap-1">
                                       {[1, 2, 3].map((star) => (
@@ -779,7 +781,7 @@ export const Dashboard: React.FC = () => {
                                     </button>
                                   )}
                                 </td>
-                                <td className="sticky left-[300px] z-10 border border-gray-700 px-4 py-3" style={{ backgroundColor: hexToRgba(rowColors.planned, rowColors.plannedOpacity) }}>
+                                <td className="sticky left-[260px] lg:left-[320px] z-10 border border-gray-700 px-2 lg:px-4 py-3 w-[140px] lg:w-[160px]" style={{ backgroundColor: hexToRgba(rowColors.planned, rowColors.plannedOpacity) }}>
                                   <div>{plannedSubtask.subtask.name}</div>
                                   {isAdmin && (
                                     <button
@@ -791,12 +793,12 @@ export const Dashboard: React.FC = () => {
                                     </button>
                                   )}
                                 </td>
-                                <td className="sticky left-[450px] z-10 border border-gray-700 px-2 py-3" style={{ backgroundColor: hexToRgba(rowColors.planned, rowColors.plannedOpacity) }}>
+                                <td className="sticky left-[400px] lg:left-[480px] z-10 border border-gray-700 px-2 py-3 w-[140px] lg:w-[160px]" style={{ backgroundColor: hexToRgba(rowColors.planned, rowColors.plannedOpacity) }}>
                                   <select
                                     value={plannedSubtask.subtask.assigned_to || ''}
                                     onChange={(e) => handleAssignmentChange(plannedSubtask.subtask.id, e.target.value || null)}
                                     disabled={!isAdmin}
-                                    className="w-full bg-gray-700 border border-gray-600 text-white text-sm rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="w-full bg-gray-700 border border-gray-600 text-white text-xs lg:text-sm rounded px-1 lg:px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
                                   >
                                     <option value="">Unassigned</option>
                                     {users.map(u => (
@@ -858,7 +860,7 @@ export const Dashboard: React.FC = () => {
                               {/* PLANNED Sub-Subtasks */}
                               {plannedSubtask.subSubtasks.map(sst => (
                                 <tr key={sst.subSubtask.id} style={{ backgroundColor: hexToRgba(rowColors.planned, rowColors.subSubtaskOpacity) }}>
-                                  <td className="sticky left-[300px] z-10 border border-gray-700 px-4 py-3 pl-8" style={{ backgroundColor: hexToRgba(rowColors.planned, rowColors.subSubtaskOpacity) }}>
+                                  <td className="sticky left-[260px] lg:left-[320px] z-10 border border-gray-700 px-2 lg:px-4 py-3 pl-4 lg:pl-8 w-[140px] lg:w-[160px]" style={{ backgroundColor: hexToRgba(rowColors.planned, rowColors.subSubtaskOpacity) }}>
                                     <div className="flex items-center gap-2">
                                       <span className="text-gray-400">↳</span> {sst.subSubtask.name}
                                       <button
@@ -877,12 +879,12 @@ export const Dashboard: React.FC = () => {
                                       </button>
                                     </div>
                                   </td>
-                                  <td className="sticky left-[450px] z-10 border border-gray-700 px-2 py-3" style={{ backgroundColor: hexToRgba(rowColors.planned, rowColors.subSubtaskOpacity) }}>
+                                  <td className="sticky left-[400px] lg:left-[480px] z-10 border border-gray-700 px-2 py-3 w-[140px] lg:w-[160px]" style={{ backgroundColor: hexToRgba(rowColors.planned, rowColors.subSubtaskOpacity) }}>
                                     <select
                                       value={sst.subSubtask.assigned_to || ''}
                                       onChange={(e) => handleSubSubtaskAssignmentChange(sst.subSubtask.id, e.target.value || null)}
                                       disabled={!isAdmin}
-                                      className="w-full bg-gray-700 border border-gray-600 text-white text-sm rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                                      className="w-full bg-gray-700 border border-gray-600 text-white text-xs lg:text-sm rounded px-1 lg:px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
                                     >
                                       <option value="">Unassigned</option>
                                       {users.map(u => (
@@ -949,11 +951,11 @@ export const Dashboard: React.FC = () => {
                           <tr style={{ backgroundColor: hexToRgba(rowColors.actual, rowColors.actualOpacity) }}>
                             {!plannedSubtask && (
                               <>
-                                <td rowSpan={totalRows} className={`sticky left-0 z-10 border border-gray-700 px-2 py-3 ${getCategoryColor(task.category)}`}>
+                                <td rowSpan={totalRows} className={`sticky left-0 z-10 border border-gray-700 px-2 py-3 w-[100px] lg:w-[120px] ${getCategoryColor(task.category)}`}>
                                   <select
                                     value={task.category}
                                     onChange={(e) => handleCategoryChange(task.id, e.target.value)}
-                                    className="w-full bg-transparent border-none text-white font-medium uppercase focus:outline-none focus:ring-2 focus:ring-blue-500 rounded px-2 py-1"
+                                    className="w-full bg-transparent border-none text-white font-medium uppercase focus:outline-none focus:ring-2 focus:ring-blue-500 rounded px-1 py-1 text-xs lg:text-sm"
                                   >
                                     <option value="dev" className="bg-gray-800">DEV</option>
                                     <option value="test" className="bg-gray-800">TEST</option>
@@ -961,7 +963,7 @@ export const Dashboard: React.FC = () => {
                                     <option value="support" className="bg-gray-800">SUPPORT</option>
                                   </select>
                                 </td>
-                                <td rowSpan={totalRows} className="sticky left-[120px] z-10 bg-gray-900 border border-gray-700 px-4 py-3">
+                                <td rowSpan={totalRows} className="sticky left-[100px] lg:left-[120px] z-10 bg-gray-900 border border-gray-700 px-2 lg:px-4 py-3 w-[160px] lg:w-[200px]">
                                   <div className="font-medium flex items-center gap-2">
                                     {task.name}
                                     <button
@@ -999,8 +1001,8 @@ export const Dashboard: React.FC = () => {
                                 </td>
                               </>
                             )}
-                            <td className="sticky left-[300px] z-10 border border-gray-700 px-4 py-3 font-semibold" style={{ backgroundColor: hexToRgba(rowColors.actual, rowColors.actualOpacity) }}>ACTUAL</td>
-                            <td className="sticky left-[450px] z-10 border border-gray-700 px-2 py-3 text-gray-500 text-xs" style={{ backgroundColor: hexToRgba(rowColors.actual, rowColors.actualOpacity) }}>-</td>
+                            <td className="sticky left-[260px] lg:left-[320px] z-10 border border-gray-700 px-2 lg:px-4 py-3 font-semibold text-sm lg:text-base w-[140px] lg:w-[160px]" style={{ backgroundColor: hexToRgba(rowColors.actual, rowColors.actualOpacity) }}>ACTUAL</td>
+                            <td className="sticky left-[400px] lg:left-[480px] z-10 border border-gray-700 px-2 py-3 text-gray-500 text-xs w-[140px] lg:w-[160px]" style={{ backgroundColor: hexToRgba(rowColors.actual, rowColors.actualOpacity) }}>-</td>
                             {dateRange.map(date => {
                               const milestoneText = actualMilestones[date];
                               return (
@@ -1019,7 +1021,7 @@ export const Dashboard: React.FC = () => {
                           {visibleSubtasks.map((st) => (
                             <React.Fragment key={st.subtask.id}>
                               <tr className="hover:bg-gray-800/50">
-                                <td className="sticky left-[300px] z-10 bg-gray-900 border border-gray-700 px-4 py-3">
+                                <td className="sticky left-[260px] lg:left-[320px] z-10 bg-gray-900 border border-gray-700 px-2 lg:px-4 py-3 w-[140px] lg:w-[160px]">
                                   <div className="flex items-center gap-2">
                                     {st.subtask.name}
                                     <button
@@ -1047,12 +1049,12 @@ export const Dashboard: React.FC = () => {
                                     </button>
                                   )}
                                 </td>
-                                <td className="sticky left-[450px] z-10 bg-gray-900 border border-gray-700 px-2 py-3">
+                                <td className="sticky left-[400px] lg:left-[480px] z-10 bg-gray-900 border border-gray-700 px-2 py-3 w-[140px] lg:w-[160px]">
                                   <select
                                     value={st.subtask.assigned_to || ''}
                                     onChange={(e) => handleAssignmentChange(st.subtask.id, e.target.value || null)}
                                     disabled={!isAdmin}
-                                    className="w-full bg-gray-700 border border-gray-600 text-white text-sm rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                                    className="w-full bg-gray-700 border border-gray-600 text-white text-xs lg:text-sm rounded px-1 lg:px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
                                   >
                                     <option value="">Unassigned</option>
                                     {users.map(u => (
@@ -1113,7 +1115,7 @@ export const Dashboard: React.FC = () => {
                               </tr>
                               {st.subSubtasks.map(sst => (
                                 <tr key={sst.subSubtask.id} className="hover:bg-gray-800/50 bg-gray-900/50">
-                                  <td className="sticky left-[300px] z-10 bg-gray-800 border border-gray-700 px-4 py-3 pl-8">
+                                  <td className="sticky left-[260px] lg:left-[320px] z-10 bg-gray-800 border border-gray-700 px-2 lg:px-4 py-3 pl-4 lg:pl-8 w-[140px] lg:w-[160px]">
                                     <div className="flex items-center gap-2">
                                       <span className="text-gray-400">↳</span> {sst.subSubtask.name}
                                       <button
@@ -1132,12 +1134,12 @@ export const Dashboard: React.FC = () => {
                                       </button>
                                     </div>
                                   </td>
-                                  <td className="sticky left-[450px] z-10 bg-gray-800 border border-gray-700 px-2 py-3">
+                                  <td className="sticky left-[400px] lg:left-[480px] z-10 bg-gray-800 border border-gray-700 px-2 py-3 w-[140px] lg:w-[160px]">
                                     <select
                                       value={sst.subSubtask.assigned_to || ''}
                                       onChange={(e) => handleSubSubtaskAssignmentChange(sst.subSubtask.id, e.target.value || null)}
                                       disabled={!isAdmin}
-                                      className="w-full bg-gray-700 border border-gray-600 text-white text-sm rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                                      className="w-full bg-gray-700 border border-gray-600 text-white text-xs lg:text-sm rounded px-1 lg:px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
                                     >
                                       <option value="">Unassigned</option>
                                       {users.map(u => (

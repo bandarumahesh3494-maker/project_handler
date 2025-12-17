@@ -138,13 +138,15 @@ export const KanbanDashboard: React.FC = () => {
           <p className={colors.textSecondary}>Track milestone progress across all stages</p>
         </div>
 
-        <div className="mb-6 flex items-center gap-3">
-          <Filter className="w-5 h-5 text-gray-400" />
-          <label className="text-sm font-medium">Filter by Engineer:</label>
+        <div className="mb-6 flex flex-wrap items-center gap-3">
+          <div className="flex items-center gap-2">
+            <Filter className="w-5 h-5 text-gray-400" />
+            <label className="text-sm font-medium whitespace-nowrap">Filter by Engineer:</label>
+          </div>
           <select
             value={selectedEngineer}
             onChange={(e) => setSelectedEngineer(e.target.value)}
-            className={`${colors.bgSecondary} border ${colors.border} ${colors.text} px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500`}
+            className={`${colors.bgSecondary} border ${colors.border} ${colors.text} px-3 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm`}
           >
             <option value="all">All Engineers</option>
             {users.map(user => (
