@@ -11,7 +11,9 @@ import { ConfigDashboard } from './components/ConfigDashboard';
 import { HistoryDashboard } from './components/HistoryDashboard';
 import { ResourceAnalysisDashboard } from './components/ResourceAnalysisDashboard';
 import { ThemeSelector } from './components/ThemeSelector';
+import { SetupWizard } from './components/SetupWizard';
 import { useAuth } from './contexts/AuthContext';
+import { useSchemaCheck } from './hooks/useSchemaCheck';
 import { LayoutGrid, CalendarDays, Users, Kanban, TrendingDown, AlertCircle, Settings, BarChart3, List, History, UserCheck } from 'lucide-react';
 import { useTheme } from './contexts/ThemeContext';
 
@@ -21,6 +23,24 @@ function App() {
   const [viewMode, setViewMode] = useState<ViewMode>('timeline');
   const { colors } = useTheme();
   const { userProfile } = useAuth();
+  const { isSetup, loading: schemaLoading, missingTables, checkSchema } = useSchemaCheck();
+
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
+
+  if (schemaLoading) {
+    return (
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+          <div className="text-white text-xl">Checking database setup...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isSetup) {
+    return <SetupWizard missingTables={missingTables} onRetry={checkSchema} supabaseUrl={supabaseUrl} />;
+  }
 
   return (
     <div className={`min-h-screen ${colors.bg}`}>
